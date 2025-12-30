@@ -72,4 +72,19 @@ const addtocart = async (req, res) => {
     }
 }
 
-export { addtocart };
+const totalItemsInCart = async (req, res) => {
+    try{
+      const {_id} = req.user;
+      
+      let cartItem = await Cart_Model.findOne({userID: _id});
+
+      let itemList = cartItem.itemList;
+
+      return res.status(200).json({itemList: itemList})
+    }
+    catch(err){
+        return res.status(500).json({error: err.message});
+    }
+}
+
+export { addtocart, totalItemsInCart };

@@ -43,3 +43,18 @@
   color: #0a7cff;
   margin-top: 8px;
 }
+
+.add_to_cart_btn {
+    margin-top: 8px;
+    padding: 8px 12px;
+    background-color: #ff6f00;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.add_to_cart_btn:hover {
+    background-color: #e65c00;
+}

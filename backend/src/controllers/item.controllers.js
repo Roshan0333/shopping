@@ -42,4 +42,17 @@ const get_itemByCategory = async (req, res) => {
     }
 }
 
-export { item_post, get_itemByCategory };
+const getItem_ById = async (req,res) => {
+    try{
+        let {itemId} = req.query;
+
+        let itemDetail = await item_Model.findById(itemId);
+
+        return res.status(200).json({itemDetail: itemDetail})
+    }
+    catch(err){
+        return res.status(500).json({error: err.message})
+    }
+}
+
+export { item_post, get_itemByCategory, getItem_ById };

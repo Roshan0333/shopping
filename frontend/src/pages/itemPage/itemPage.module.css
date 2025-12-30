@@ -62,3 +62,40 @@
   background-color: #9bbcf5;
   cursor: not-allowed;
 }
+
+.top_bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.cart_icon_box {
+  position: relative;
+  cursor: pointer;
+}
+
+.cart_icon {
+  font-size: 26px;
+  color: white;
+  margin-left: 10px;
+}
+
+.cart_count {
+  position: absolute;
+  top: -8px;
+  right: -10px;
+  background-color: red;
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 2px 6px;
+  border-radius: 50%;
+}
+
+.items_container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+

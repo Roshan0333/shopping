@@ -1,0 +1,128 @@
+/* src/components/Auth.css */
+
+.authContainer {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+}
+
+/* Card */
+.authForm {
+  background: rgba(255, 255, 255, 0.95);
+  padding: 32px;
+  width: 340px;
+  border-radius: 14px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(8px);
+  animation: fadeIn 0.6s ease-in-out;
+}
+
+/* Title */
+.authForm h2 {
+  text-align: center;
+  margin-bottom: 22px;
+  color: #333;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+/* Inputs */
+.authInput {
+  width: 100%;
+  padding: 12px 14px;
+  margin: 10px 0;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  background: #fafafa;
+  color: black;
+}
+
+.authInput:focus {
+  border-color: #667eea;
+  background: #fff;
+  box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.2);
+}
+
+/* Button */
+.authBtn {
+  width: 100%;
+  padding: 12px;
+  margin-top: 14px;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 0.4px;
+  transition: all 0.3s ease;
+}
+
+.authBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(118, 75, 162, 0.35);
+}
+
+.authBtn:active {
+  transform: translateY(0);
+}
+
+/* Messages */
+.authError {
+  color: #e63946;
+  font-size: 13px;
+  text-align: center;
+  margin-bottom: 8px;
+}
+
+.authSuccess {
+  color: #2a9d8f;
+  font-size: 13px;
+  text-align: center;
+  margin-bottom: 8px;
+}
+
+/* Login / Signup Link */
+.authLink {
+  margin-top: 18px;
+  text-align: center;
+  font-size: 14px;
+  color: #444;
+}
+
+.authLink span {
+  color: #667eea;
+  cursor: pointer;
+  font-weight: 600;
+  transition: color 0.3s ease;
+}
+
+.authLink span:hover {
+  color: #764ba2;
+  text-decoration: underline;
+}
+
+/* Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Mobile friendly */
+@media (max-width: 400px) {
+  .authForm {
+    width: 90%;
+    padding: 24px;
+  }
+}

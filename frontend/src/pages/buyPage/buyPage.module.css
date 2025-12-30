@@ -77,3 +77,38 @@
 .total_btn:hover {
   background: #218838;
 }
+
+.cart_btn {
+  padding: 12px;
+  background: linear-gradient(135deg, #ff9800, #ff6f00);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+    margin-left: 10px;
+}
+
+.cart_btn:hover {
+  background: linear-gradient(135deg, #ff6f00, #e65100);
+}
+
+.place_order_btn {
+  padding: 12px;
+  background: linear-gradient(135deg, #00c853, #00a846);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  margin: 10px;
+}
+
+.place_order_btn:hover {
+  box-shadow: 0 6px 14px rgba(0, 200, 83, 0.35);
+  transform: translateY(-1px);
+}
+

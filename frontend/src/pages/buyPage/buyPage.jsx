@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { useLocation } from "react-router-dom";
 import Styles from "./buyPage.module.css";
+import axios from "axios";
 
 function BuyPage() {
 
@@ -8,26 +9,92 @@ function BuyPage() {
 
     const itemData = state?.itemData;
 
-    const [quanity, setQuanity] = useState(1);
+    const [quantity, setQuantity] = useState(1);
     const [totalPrice, setTotalPrice] = useState(itemData.price)
 
-    const increaseQuanity = () => {
-        setQuanity(prev => prev + 1);
+    const increaseQuantity = () => {
+        setQuantity(prev => prev + 1);
     }
 
-    const decreaseQuanity = () => {
-        if (quanity > 1) {
-            setQuanity(prev => prev - 1);
+    const decreaseQuantity = () => {
+        if (quantity > 1) {
+            setQuantity(prev => prev - 1);
         }
     }
 
     const itemsTotalPrice = () => {
-        setTotalPrice(quanity * itemData.price);
+        setTotalPrice(quantity * itemData.price);
+    }
+
+    const addCart = async () => {
+        try {
+            let response = await axios.post(
+                "http://localhost:3000/api/v1/shopping/cart/addToCart",
+                {
+                    itemID: itemData._id,
+                    quantity: quantity
+                },
+                {
+                    withCredentials: true
+                }
+            )
+
+            if (response.status === 200) {
+                alert(response.data.msg)
+            }
+        }
+        catch (err) {
+            if (err.response) {
+                if (err.response.status === 401) {
+                    alert(`Error: ${err.response.data.msg}`);
+                }
+                else if (err.response.status === 500) {
+                    alert(`Error: ${err.response.data.error}`);
+                    console.log(`Error: ${err.response.data.error}`);
+                }
+            }
+            else {
+                alert(`Error: ${err.message}`)
+                console.log(`Error: ${err.message}`)
+            }
+        }
+    }
+
+    const placeOrder = async () => {
+        try {
+            let response = await axios.post(
+                "http://localhost:3000/api/v1/shopping/buyItem/buy",
+                {
+                    itemID: itemData._id,
+                    quantity: quantity
+                },
+                {
+                    withCredentials: true
+                }
+            )
+
+            if (response.status === 200) {
+                alert(response.data.msg);
+            }
+        }
+        catch (err) {
+            if (err.response) {
+                if (err.response.status === 401) {
+                    alert(`Error: ${err.response.data.msg}`);
+                }
+                else if (err.response.status === 500) {
+                    console.log(`Error: ${err.response.data.error}`)
+                }
+            }
+            else {
+                console.log(`Error: ${err.message}`);
+            }
+        }
     }
 
     useEffect(() => {
 
-    }, [quanity])
+    }, [quantity])
 
     return (
         <div className={Styles.buy_container}>
@@ -41,14 +108,27 @@ function BuyPage() {
             </div>
 
             <div className={Styles.quantity_box}>
-                <button onClick={increaseQuanity}>+</button>
-                <span>{quanity}</span>
-                <button onClick={decreaseQuanity}>-</button>
+                <button onClick={increaseQuantity}>+</button>
+                <span>{quantity}</span>
+                <button onClick={decreaseQuantity}>-</button>
             </div>
 
             <div className={Styles.total_box}>
                 <p>{totalPrice}</p>
                 <button onClick={itemsTotalPrice} className={Styles.total_btn}>Total Price</button>
+                <button
+                    className={Styles.cart_btn}
+                    onClick={addCart}
+                >
+                    Add to Cart
+                </button>
+
+                <button
+                    className={Styles.place_order_btn}
+                    onClick={placeOrder}
+                >
+                    Place Order
+                </button>
             </div>
 
         </div>
