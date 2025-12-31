@@ -2,18 +2,26 @@ import { useEffect, useState } from "react"
 import { useLocation } from "react-router-dom";
 import Styles from "./buyPage.module.css";
 import axios from "axios";
+import socket from "../../utilis/socket.js";
+import { useNavigate } from "react-router-dom";
 
 function BuyPage() {
 
     const { state } = useLocation();
 
+    let Navigate = useNavigate();
+
     const itemData = state?.itemData;
 
     const [quantity, setQuantity] = useState(1);
-    const [totalPrice, setTotalPrice] = useState(itemData.price)
+    const [totalPrice, setTotalPrice] = useState(itemData.price);
+
+    const [availableQty, setAvailableQty] = useState(itemData.itemQuantityAvailable);
 
     const increaseQuantity = () => {
-        setQuantity(prev => prev + 1);
+        if(quantity < availableQty){
+            setQuantity(prev => prev + 1);
+        }
     }
 
     const decreaseQuantity = () => {
@@ -75,16 +83,13 @@ function BuyPage() {
 
             if (response.status === 200) {
                 alert(response.data.msg);
+                Navigate("/itemPage");
+                setQuantity(0)
             }
         }
         catch (err) {
             if (err.response) {
-                if (err.response.status === 401) {
-                    alert(`Error: ${err.response.data.msg}`);
-                }
-                else if (err.response.status === 500) {
-                    console.log(`Error: ${err.response.data.error}`)
-                }
+               alert(`Error: ${err.response.data.msg}`);
             }
             else {
                 console.log(`Error: ${err.message}`);
@@ -95,6 +100,20 @@ function BuyPage() {
     useEffect(() => {
 
     }, [quantity])
+
+    useEffect(() => {
+        socket.emit("joinItemRoom", itemData._id);
+
+        socket.on("quantityUpdate", (data) => {
+            if (data.itemID === itemData._id) {
+                setAvailableQty(data.available);
+            }
+        });
+
+        return () => {
+            socket.off("quantityUpdate");
+        };
+    }, [itemData._id]);
 
     return (
         <div className={Styles.buy_container}>
