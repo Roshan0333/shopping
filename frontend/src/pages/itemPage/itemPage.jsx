@@ -107,7 +107,6 @@ function ItemPage() {
                     </button>
                 </div>
 
-                {/* 🛒 Cart Icon */}
                 <div className={Styles.cart_icon_box}>
                     <Link to="/cartPage"><FaShoppingCart className={Styles.cart_icon} /></Link>
                     {cartCount > 0 && (

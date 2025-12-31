@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import Styles from "./cart.module.css";
+import {FaTrash} from "react-icons/fa"
 import axios from "axios";
 
 function CartPage() {
@@ -9,6 +10,9 @@ function CartPage() {
     const [cartItemDetail, setCartItemDetail] = useState([]);
 
     const [totalPrice, setTotalPrice] = useState(0);
+
+    const [deleteFlag, setdeleteFlag] = useState(false);
+
 
     const placeOrder = async () => {
         try {
@@ -40,6 +44,28 @@ function CartPage() {
         }
     }
 
+    const deleteItem = async (itemId) => {
+        try{
+            let response = await axios.post(
+                "http://localhost:3000/api/v1/shopping/cart/deleteItem",
+                {itemId: itemId},
+                {withCredentials: true}
+            )
+
+            if(response.status === 200){
+                alert(response.data.msg);
+                setdeleteFlag(prev => !prev);
+            }
+        }
+        catch(err){
+            if(err.response){
+                alert(`Error: ${err.response.data.msg}`);
+            }
+            else{
+                alert(`Error: ${err.message}`);
+            }
+        }
+    }
 
     useEffect(() => {
         ; (
@@ -100,7 +126,7 @@ function CartPage() {
                 }
             }
         )()
-    }, [])
+    }, [deleteFlag])
 
     return (
         <div className={Styles.cart_container}>
@@ -124,6 +150,9 @@ function CartPage() {
                                 <p key={index} className={Styles.Quantity}>Quantity: {item.quantity}</p>
                                 <p className={Styles.price}>₹ {item.price}</p>
                             </div>
+
+                            <div className={Styles.deleteContainer} onClick={() => deleteItem(item._id)}><FaTrash className={Styles.delete}/></div>
+                            
                         </div>
                     ))}
 

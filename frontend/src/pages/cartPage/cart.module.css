@@ -85,3 +85,19 @@
   margin: 6px 0;
   line-height: 1.4;
 }
+
+.deleteContainer{
+  width: 30px;
+  height: 30px;
+  background-color: red;
+  display: flex;
+  align-items: center;
+  border-radius: 5px;
+}
+
+.delete{
+  width: 30px;
+  height: 20px;
+  background-color: red;
+  color: white;
+}

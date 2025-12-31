@@ -72,6 +72,23 @@ const addtocart = async (req, res) => {
     }
 }
 
+const deleteItemFromCart = async (req, res) => {
+    try{
+        const {_id} = req.user;
+        const {itemId} = req.body;
+
+        await Cart_Model.findOneAndUpdate(
+            {userID: _id},
+            {$pull: {itemList: {itemId: itemId}}}
+        );
+
+        return res.status(200).json({msg: "Item Delete from Cart Successfully"});
+    }
+    catch(err){
+        return res.status(500).json({error: err.message})
+    }
+}
+
 const totalItemsInCart = async (req, res) => {
     try{
       const {_id} = req.user;
@@ -87,4 +104,4 @@ const totalItemsInCart = async (req, res) => {
     }
 }
 
-export { addtocart, totalItemsInCart };
+export { addtocart, deleteItemFromCart, totalItemsInCart };
